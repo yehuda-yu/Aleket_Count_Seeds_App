@@ -15,6 +15,7 @@ from skimage.filters import median
 from skimage.measure import find_contours, label
 from skimage.filters import threshold_otsu
 import scipy
+import matplotlib.pyplot as plt
 
 ###################### Functions ######################
 
@@ -70,6 +71,12 @@ if uploaded_file is not None:
         L_channel = image_lab[:,:,2]
         L_channel = scipy.ndimage.median_filter(L_channel, footprint=np.ones((2,2)))
         st.image(L_channel,clamp=True,caption='L channel image')
+        
+        # Use Matplotlib to display the image
+        plt.imshow(L_channel, cmap='gray')
+
+        # Use Streamlit to display the Matplotlib plot
+        st.pyplot()
             
         # Calculate the Otsu threshold and create masked image
         st.write('3. Mask with Otsu threshold')
