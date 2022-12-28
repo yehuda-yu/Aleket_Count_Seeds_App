@@ -39,8 +39,8 @@ def segment_image_kmeans(img, k=3, attempts=10):
     
     return segmented_image
 
-
-
+###### Streamlit ######
+st.set_page_config(page_title='71254 - K-Means - Yedidya Harris', page_icon = favicon, layout = 'wide', initial_sidebar_state = 'auto')
 st.title("Image KMeans Clustering")
 
 # Allow the user to select a TIF image file
