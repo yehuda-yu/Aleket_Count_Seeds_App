@@ -47,7 +47,7 @@ st.title("Image Processing & Clustering")
 uploaded_file = st.file_uploader("Choose image file")
 
 # Expanded bottom fore analysis:
-with st.expander("See explanation"):
+with st.expander("Filters"):
     st.write('Here shold be an analysis')
 
 if uploaded_file is not None:
