@@ -41,17 +41,17 @@ def segment_image_kmeans(img, k=3, attempts=10):
 
 ###### Streamlit ######
 st.set_page_config(page_icon = "bar_chart", layout = 'wide')
-st.title("Image KMeans Clustering")
+st.title("Image Processing & Clustering")
 
 # Allow the user to select a TIF image file
 uploaded_file = st.file_uploader("Choose image file")
 
+# Expanded bottom fore analysis:
+with st.expander("See explanation"):
+    st.write('Here shold be an analysis')
+
 if uploaded_file is not None:
-    
-    with st.expander("See explanation"):
-    st.write("the chart above shows some numbers I picked for you.rolled actual dice for these, so they're *guaranteed* to be random.")
-    
-    
+       
     # Open the TIF image using io amd present image:
     image = io.imread(uploaded_file)
     st.subheader('Original image:')
