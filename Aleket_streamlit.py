@@ -5,6 +5,7 @@ Created on Wed Dec 28 15:59:10 2022
 @author: User
 """
 import streamlit as st
+import PIL
 from PIL import Image
 import numpy as np
 import cv2
