@@ -40,7 +40,7 @@ def segment_image_kmeans(img, k=3, attempts=10):
     return segmented_image
 
 ###### Streamlit ######
-st.set_page_config(page_icon = "bar_chart", layout = 'wide')
+st.set_page_config(page_icon = "bar_chart")
 st.title("Image Processing & Clustering")
 
 # Allow the user to select a TIF image file
