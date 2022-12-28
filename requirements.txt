@@ -3,3 +3,4 @@ opencv-contrib-python-headless
 imutils
 numpy
 scikit-image
+scipy
