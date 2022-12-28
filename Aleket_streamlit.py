@@ -67,7 +67,7 @@ if uploaded_file is not None:
         # Median filter on L channel to clean Noise
         st.write('2. Apply Median filter')
         # Apply the median filter with a radius of 2 to the L channel of the CIE LAB image using the median function from skimage:
-        L_channel = scipy.ndimage.median_filter(image_lab[:,:,2], footprint=np.ones((2,2)))
+        L_channel = scipy.ndimage.median_filter(image_lab[:,:,1], footprint=np.ones((2,2)))
         st.image(L_channel,clamp=True,caption='L channel image',)
     
         # Calculate the Otsu threshold and create masked image
