@@ -63,6 +63,7 @@ if uploaded_file is not None:
         image = io.imread(uploaded_file)
         image_lab = color.rgb2lab(image)
         st.image(image_lab,clamp=True,caption="LAB format image",)
+        st.write(image_lab.shape)
 
         # Median filter on L channel to clean Noise
         st.write('2. Apply Median filter')
