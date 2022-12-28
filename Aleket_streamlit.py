@@ -77,7 +77,7 @@ if uploaded_file is not None:
         ax.imshow(L_channel, cmap='gray')
 
         # Use Streamlit to display the Matplotlib plot
-        st.pyplot()
+        st.pyplot(fig)
             
         # Calculate the Otsu threshold and create masked image
         st.write('3. Mask with Otsu threshold')
