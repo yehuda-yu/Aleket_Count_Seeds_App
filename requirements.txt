@@ -1,7 +1,3 @@
 streamlit
-PIL
 cv2
 numpy
- 
-
-
