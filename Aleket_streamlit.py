@@ -57,7 +57,7 @@ with st.expander("Filters"):
     # Convert to PIE-LaB format:
     st.subheader('1. Convert from RGB to CIE-LAB format')
         
-    Image.open(uploaded_file).convert("RGB")
+    image = Image.open(uploaded_file).convert("RGB")
     image_lab = color.rgb2lab(image)
     st.image(image_lab)
     
