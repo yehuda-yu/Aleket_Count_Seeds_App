@@ -56,25 +56,9 @@ if uploaded_file is not None:
     
     # Expanded bottom fore analysis:
     with st.expander("Filters"):
-        # Convert to PIE-LaB format:
-        st.subheader('1. Convert from RGB to CIE-LAB format')
-        image = io.imread(uploaded_file)
-        image_lab = color.rgb2lab(image)
-        st.image(image_lab)
 
-        # Median filter on L channel to clean Noise
-        st.subheader('2. Apply Median filter')
-        # Apply the median filter with a radius of 2 to the L channel of the CIE LAB image using the median function from skimage:
-        image_lab[:,:,2] = median(image_lab[:,:,2], selem=np.ones((2,2)))
-        st.image(image_lab[:,:,2])
 
-        # Calculate the Otsu threshold and create masked image
-        threshold = threshold_otsu(image_lab[:,:,2])
-        # Create a mask using the Otsu threshold
-        mask = image_lab[:,:,2] > threshold
-        st.image(mask)
-
-###################### Kmens ######################
+        ###################### Kmens ######################
 
         # Open the TIF image using io amd present image:
         image = io.imread(uploaded_file)
