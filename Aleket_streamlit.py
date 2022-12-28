@@ -61,7 +61,7 @@ if uploaded_file is not None:
         st.write('1. Convert from RGB to CIE-LAB format')
         image = io.imread(uploaded_file)
         image_lab = color.rgb2lab(image)
-        st.image(image_lab,clamp=False,caption="LAB format image",width=500)
+        st.image(image_lab,clamp=True,caption="LAB format image",width=500)
 
         # Median filter on L channel to clean Noise
         st.write('2. Apply Median filter')
