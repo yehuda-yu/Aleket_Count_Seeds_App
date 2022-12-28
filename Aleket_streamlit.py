@@ -14,6 +14,7 @@ from skimage import color
 from skimage.filters import median
 from skimage.measure import find_contours, label
 from skimage.filters import threshold_otsu
+from scipy.ndimage import binary_closing, binary_opening
 import scipy
 import matplotlib.pyplot as plt
 
@@ -72,7 +73,7 @@ if uploaded_file is not None:
         ax.set_title('Lab color space format image')
         # Use Streamlit to display the Matplotlib plot
         st.pyplot(fig)
-        st.image(image_lab,clamp=True,caption="LAB format image")
+        #st.image(image_lab,clamp=True,caption="LAB format image")
    
         # Median filter on L channel to clean Noise
         st.write('2. Apply Median filter on L channel')
@@ -97,7 +98,23 @@ if uploaded_file is not None:
         ax.set_title('Masked image')
         # Use Streamlit to display the Matplotlib plot
         st.pyplot(fig)
-
+        
+        st.write('4. Clean image and count seeds')
+        # Clean up the binary image using morphological operations
+        cleaned_image = binary_closing(mask, structure=np.ones((3,3)))
+        cleaned_image = binary_opening(cleaned_image, structure=np.ones((3,3)))
+        # Identify seed boundaries
+        contours = find_contours(cleaned_image, .5)
+        # Print number of seeds in image
+        st.write('Image contains',len(contours),'seeds')
+        # Plot seed contours
+        fig, ax = plt.subplots()
+        ax.imshow(cleaned_image, cmap='gray')
+        ax.set_title('Clean Image')
+        for contour in contours:
+           ax.plot(contour[:, 1], contour[:, 0], '-r', linewidth=1.5)
+        # Use Streamlit to display the Matplotlib plot
+        st.pyplot(fig)
         ###################### Kmens ######################
 
     # slider for choosing K:
