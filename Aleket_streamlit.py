@@ -55,7 +55,10 @@ st.title("Image Processing & Clustering")
 uploaded_file = st.file_uploader("Choose image file")
 
 if uploaded_file is not None:
-    
+    # Open the TIF image using io amd present image:
+    image = io.imread(uploaded_file)
+    st.subheader('Original image:')
+    st.image(image,use_column_width=True)
     # Expanded bottom fore analysis:
     with st.expander("Filters"):
 
@@ -63,19 +66,23 @@ if uploaded_file is not None:
         st.write('1. Convert from RGB to CIE-LAB format')
         image = io.imread(uploaded_file)
         image_lab = color.rgb2lab(image)
+        # Use Matplotlib to display the image
+        fig, ax = plt.subplots()
+        ax.imshow(image_lab)
+        ax.set_title('Lab color space format image')
+        # Use Streamlit to display the Matplotlib plot
+        st.pyplot(fig)
         st.image(image_lab,clamp=True,caption="LAB format image")
    
         # Median filter on L channel to clean Noise
-        st.write('2. Apply Median filter')
+        st.write('2. Apply Median filter on L channel')
         # Apply the median filter with a radius of 2 to the L channel of the CIE LAB image using the median function from skimage:
         L_channel = image_lab[:,:,2]
         L_channel = scipy.ndimage.median_filter(L_channel, footprint=np.ones((2,2)))
-        st.image(L_channel,clamp=True,caption='L channel image')
-        
         # Use Matplotlib to display the image
         fig, ax = plt.subplots()
         ax.imshow(L_channel, cmap='gray')
-
+        ax.set_title('Medin filter on lightness channel')
         # Use Streamlit to display the Matplotlib plot
         st.pyplot(fig)
             
@@ -84,15 +91,15 @@ if uploaded_file is not None:
         threshold = threshold_otsu(L_channel)
         # Create a mask using the Otsu threshold
         mask = L_channel > threshold
-        st.image(mask,clamp=True,caption='Masked image',)
+        #st.image(mask,clamp=True,caption='Masked image',)
+        fig, ax = plt.subplots()
+        ax.imshow(mask, cmap='gray')
+        ax.set_title('Masked image')
+        # Use Streamlit to display the Matplotlib plot
+        st.pyplot(fig)
 
         ###################### Kmens ######################
 
-        # Open the TIF image using io amd present image:
-        image = io.imread(uploaded_file)
-        st.subheader('Original image:')
-        st.image(image,use_column_width=True)
-    
     # slider for choosing K:
     k_value = st.slider('Insert K value (number of clusters):', 2,10,3) # asks for input from the user
     attempts_value_slider = st.slider('Number of attempts', value = 7, min_value = 1, max_value = 10) # slider example
