@@ -42,13 +42,16 @@ def segment_image_kmeans(img, k=3, attempts=10):
 ###### Streamlit ######
 st.set_page_config(page_icon = "bar_chart", layout = 'wide')
 st.title("Image KMeans Clustering")
-with st.expander("See explanation"):
-    st.write("the chart above shows some numbers I picked for you.rolled actual dice for these, so they're *guaranteed* to be random.")
-    st.image("https://static.streamlit.io/examples/dice.jpg")
+
 # Allow the user to select a TIF image file
 uploaded_file = st.file_uploader("Choose image file")
 
 if uploaded_file is not None:
+    
+    with st.expander("See explanation"):
+    st.write("the chart above shows some numbers I picked for you.rolled actual dice for these, so they're *guaranteed* to be random.")
+    
+    
     # Open the TIF image using io amd present image:
     image = io.imread(uploaded_file)
     st.subheader('Original image:')
