@@ -8,6 +8,7 @@ import streamlit as st
 from PIL import Image
 import numpy as np
 import cv2
+import skimage.io as io
 
 
 # function for k mean
@@ -46,8 +47,8 @@ st.title("Image KMeans Clustering")
 uploaded_file = st.file_uploader("Choose image file")
 
 if uploaded_file is not None:
-    # Open the TIF image using PIL amd present image:
-    image = Image.open(uploaded_file)
+    # Open the TIF image using io amd present image:
+    image = io.imread(uploaded_file)
     st.subheader('Original image:')
     st.image(image,use_column_width=True)
     
