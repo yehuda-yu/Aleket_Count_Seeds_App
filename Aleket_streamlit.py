@@ -62,13 +62,13 @@ if uploaded_file is not None:
         st.write('1. Convert from RGB to CIE-LAB format')
         image = io.imread(uploaded_file)
         image_lab = color.rgb2lab(image)
-        st.image(image_lab,clamp=True,caption="LAB format image",width=500)
+        st.image(image_lab,clamp=True,caption="LAB format image",)
 
         # Median filter on L channel to clean Noise
         st.write('2. Apply Median filter')
         # Apply the median filter with a radius of 2 to the L channel of the CIE LAB image using the median function from skimage:
         image_lab[:,:,2] = scipy.ndimage.median_filter(image_lab[:,:,2], footprint=np.ones((2,2)))
-        st.image(image_lab[:,:,2],clamp=True,caption='L channel image',width=500)
+        st.image(image_lab[:,:,2],clamp=True,caption='L channel image',)
     
         # Calculate the Otsu threshold and create masked image
         st.write('3. Mask with Otsu threshold')
