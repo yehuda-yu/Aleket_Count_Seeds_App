@@ -50,7 +50,7 @@ def segment_image_kmeans(img, k=3, attempts=10):
 
 ###################### Streamlit ######################
 st.set_page_config(page_icon = "bar_chart")
-st.title("Image Processing & Clustering")
+st.title("Orobanche cumana seed Counting App")
 
 # Allow the user to select a TIF image file
 uploaded_file = st.file_uploader("Choose image file")
