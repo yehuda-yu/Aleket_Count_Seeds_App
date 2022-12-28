@@ -66,14 +66,14 @@ if uploaded_file is not None:
         # Median filter on L channel to clean Noise
         st.write('2. Apply Median filter')
         # Apply the median filter with a radius of 2 to the L channel of the CIE LAB image using the median function from skimage:
-        image_lab[:,:,2] = median(image_lab[:,:,2], footprint=np.ones((2,2)))
-        st.image(image_lab[:,:,2],clamp=True,caption='L channel image',width=500)
+        image_lab[:,:,0] = median(image_lab[:,:,0], footprint=np.ones((2,2)))
+        st.image(image_lab[:,:,0],clamp=True,caption='L channel image',width=500)
     
         # Calculate the Otsu threshold and create masked image
         st.write('3. Mask with Otsu threshold')
-        threshold = threshold_otsu(image_lab[:,:,2])
+        threshold = threshold_otsu(image_lab[:,:,0])
         # Create a mask using the Otsu threshold
-        mask = image_lab[:,:,2] > threshold
+        mask = image_lab[:,:,0] > threshold
         st.image(mask,clamp=True,caption='Masked image',width=500)
 
         ###################### Kmens ######################
