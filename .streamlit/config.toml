@@ -11,7 +11,7 @@ backgroundColor = '#000'
 # Used as the background for most widgets. Examples of widgets with this background are st.sidebar,
 # st.text_input, st.date_input.
 #secondaryBackgroundColor =  "#ebd2b9" # wheat  "#d7ab82" # yellow <-- not enough contrast
-secondaryBackgroundColor =  "#ffffff" # white  "#d7ab82" # yellow <-- not enough contrast
+secondaryBackgroundColor =  "#919e8b" # gray  "#d7ab82" # yellow <-- not enough contrast
 
 # Font color for the page.
 #textColor = "#6e7074" # grey
