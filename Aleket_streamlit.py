@@ -105,8 +105,6 @@ if uploaded_file is not None:
         cleaned_image = binary_opening(cleaned_image, structure=np.ones((3,3)))
         # Identify seed boundaries
         contours = find_contours(cleaned_image, .5)
-        # Print number of seeds in image
-        st.write('Image contains',len(contours),'seeds')
         # Plot seed contours
         fig, ax = plt.subplots()
         ax.imshow(cleaned_image, cmap='gray')
@@ -115,6 +113,10 @@ if uploaded_file is not None:
            ax.plot(contour[:, 1], contour[:, 0], '-r', linewidth=1.5)
         # Use Streamlit to display the Matplotlib plot
         st.pyplot(fig)
+        
+        # Print number of seeds in image
+        st.write('Image contains',len(contours),'seeds')
+        
         ###################### Kmens ######################
 
     # slider for choosing K:
