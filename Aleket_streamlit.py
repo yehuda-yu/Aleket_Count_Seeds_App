@@ -9,7 +9,12 @@ from PIL import Image
 import numpy as np
 import cv2
 import skimage.io as io
+from skimage import color
+from skimage.filters import median
+from skimage.measure import find_contours, label
+from skimage.filters import threshold_otsu
 
+###################### Functions ######################
 
 # function for k mean
 def segment_image_kmeans(img, k=3, attempts=10): 
@@ -39,7 +44,7 @@ def segment_image_kmeans(img, k=3, attempts=10):
     
     return segmented_image
 
-###### Streamlit ######
+###################### Streamlit ######################
 st.set_page_config(page_icon = "bar_chart")
 st.title("Image Processing & Clustering")
 
@@ -48,7 +53,24 @@ uploaded_file = st.file_uploader("Choose image file")
 
 # Expanded bottom fore analysis:
 with st.expander("Filters"):
-    st.write('Here shold be an analysis')
+    # Convert to PIE-LaB format:
+    st.subheader('1. Convert from RGB to CIE-LAB format')
+        
+    Image.open(uploaded_file).convert("RGB")
+    image_lab = color.rgb2lab(image)
+    st.image(image_lab)
+    
+    # Median filter on L channel to clean Noise
+    st.subheader('2. Apply Median filter')
+    # Apply the median filter with a radius of 2 to the L channel of the CIE LAB image using the median function from skimage:
+    image_lab[:,:,2] = median(image_lab[:,:,2], selem=np.ones((2,2)))
+    st.image(image_lab[:,:,2])
+    
+    # Calculate the Otsu threshold and create masked image
+    threshold = threshold_otsu(image_lab[:,:,2])
+    # Create a mask using the Otsu threshold
+    mask = image_lab[:,:,2] > threshold
+    st.image(mask)
 
 if uploaded_file is not None:
        
