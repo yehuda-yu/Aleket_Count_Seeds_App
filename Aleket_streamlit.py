@@ -14,6 +14,7 @@ from skimage import color
 from skimage.filters import median
 from skimage.measure import find_contours, label
 from skimage.filters import threshold_otsu
+import scipy
 
 ###################### Functions ######################
 
@@ -66,7 +67,7 @@ if uploaded_file is not None:
         # Median filter on L channel to clean Noise
         st.write('2. Apply Median filter')
         # Apply the median filter with a radius of 2 to the L channel of the CIE LAB image using the median function from skimage:
-        image_lab[:,:,2] = median(image_lab[:,:,2], footprint=np.ones((2,2)))
+        image_lab[:,:,2] = scipy.ndimage.median_filter(image_lab[:,:,2], footprint=np.ones((2,2)))
         st.image(image_lab[:,:,2],clamp=True,caption='L channel image',width=500)
     
         # Calculate the Otsu threshold and create masked image
