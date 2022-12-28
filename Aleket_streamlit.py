@@ -73,7 +73,8 @@ if uploaded_file is not None:
         st.image(L_channel,clamp=True,caption='L channel image')
         
         # Use Matplotlib to display the image
-        plt.imshow(L_channel, cmap='gray')
+        fig, ax = plt.subplots()
+        ax.imshow(L_channel, cmap='gray')
 
         # Use Streamlit to display the Matplotlib plot
         st.pyplot()
