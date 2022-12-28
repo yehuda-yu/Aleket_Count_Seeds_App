@@ -74,7 +74,7 @@ if uploaded_file is not None:
         threshold = threshold_otsu(image_lab[:,:,2])
         # Create a mask using the Otsu threshold
         mask = image_lab[:,:,2] > threshold
-        st.image(mask,clamp=True,caption='Masked image',,width=500)
+        st.image(mask,clamp=True,caption='Masked image',width=500)
 
         ###################### Kmens ######################
 
