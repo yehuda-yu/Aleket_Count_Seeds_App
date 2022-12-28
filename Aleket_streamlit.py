@@ -59,7 +59,7 @@ if uploaded_file is not None:
 
         # Convert to PIE-LaB format:
         st.write('1. Convert from RGB to CIE-LAB format')
-        image = io.imread(uploaded_file)
+        image = io.imread(uploaded_file).convert("RGB")
         image_lab = color.rgb2lab(image)
         st.image(image_lab,clamp=True,caption="LAB format image",width=500)
 
