@@ -68,8 +68,9 @@ if uploaded_file is not None:
         # Apply the median filter with a radius of 2 to the L channel of the CIE LAB image using the median function from skimage:
         image_lab[:,:,2] = median(image_lab[:,:,2], footprint=np.ones((2,2)))
         #st.image(image_lab[:,:,2])
-
+    
         # Calculate the Otsu threshold and create masked image
+        st.subheader('3. Mask with Otsu threshold')
         threshold = threshold_otsu(image_lab[:,:,2])
         # Create a mask using the Otsu threshold
         mask = image_lab[:,:,2] > threshold
