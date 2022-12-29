@@ -19,7 +19,7 @@ import scipy
 import matplotlib.pyplot as plt
 
 ###################### Functions ######################
-
+@st.cache
 # function for k mean
 def segment_image_kmeans(img, k=3, attempts=10): 
 
@@ -48,9 +48,26 @@ def segment_image_kmeans(img, k=3, attempts=10):
     
     return segmented_image
 
-###################### Streamlit ######################
-st.set_page_config(page_icon = "bar_chart")
-st.title("Orobanche cumana seed Counting App")
+
+def process_image(image, threshold):
+    # Convert to PIE-LaB format:
+    image_lab = color.rgb2lab(image)
+
+    # Median filter on L channel to clean Noise
+    L_channel = image_lab[:,:,2]
+    L_channel = scipy.ndimage.median_filter(L_channel, footprint=np.ones((2,2)))
+
+    # Create a mask using the Otsu threshold
+    mask = np.where(L_channel < threshold, 0, 255)
+
+    # Clean up the binary image using morphological operations
+    cleaned_image = binary_closing(mask, structure=np.ones((3,3)))
+    cleaned_image = binary_opening(cleaned_image, structure=np.ones((3,3)))
+
+    # Identify seed boundaries
+    contours = find_contours(cleaned_image, .5)
+
+    return image_lab, L_channel, mask, cleaned_image, contours
 
 # Allow the user to select a TIF image file
 uploaded_file = st.file_uploader("Choose image file")
@@ -62,54 +79,18 @@ if uploaded_file is not None:
     st.image(image,use_column_width=True)
     # Expanded bottom fore analysis:
     with st.expander("Filters"):
-
-        # Convert to PIE-LaB format:
-        st.write('1. Convert from RGB to CIE-LAB format')
-        image = io.imread(uploaded_file)
-        image_lab = color.rgb2lab(image)
-        # Use Matplotlib to display the image
-        fig, ax = plt.subplots()
-        ax.imshow(image_lab)
-        ax.set_title('Lab color space format image')
-        # Use Streamlit to display the Matplotlib plot
-        st.pyplot(fig)
-        #st.image(image_lab,clamp=True,caption="LAB format image")
-   
-        # Median filter on L channel to clean Noise
-        st.write('2. Apply Median filter on L channel')
-        # Apply the median filter with a radius of 2 to the L channel of the CIE LAB image using the median function from skimage:
-        L_channel = image_lab[:,:,2]
-        L_channel = scipy.ndimage.median_filter(L_channel, footprint=np.ones((2,2)))
-        # Use Matplotlib to display the image
-        fig, ax = plt.subplots()
-        ax.imshow(L_channel, cmap='gray')
-        ax.set_title('Medin filter on lightness channel')
-        # Use Streamlit to display the Matplotlib plot
-        st.pyplot(fig)
-            
         # Calculate the Otsu threshold and create masked image
         st.write('3. Mask with threshold')
-        
-        # Otsu thresh for recommandation:
+
+        # Otsu thresh for recommendation:
         otsu_thresh = threshold_otsu(L_channel)
         st.write(f'Otsu threshold is {otsu_thresh}')
-        # Set threshold by user choise and apply mask
+        # Set threshold by user choice and apply mask
         threshold = st.slider('Threshold Value', min_value=0, max_value=255)
-        # Create a mask using the Otsu threshold
-        mask = np.where(L_channel < threshold, 0, 255)
-        #st.image(mask,clamp=True,caption='Masked image',)
-        fig, ax = plt.subplots()
-        ax.imshow(mask, cmap='gray')
-        ax.set_title('Masked image')
-        # Use Streamlit to display the Matplotlib plot
-        st.pyplot(fig)
-        
+
+        image_lab, L_channel, mask, cleaned_image, contours = process_image(image, threshold)
+
         st.write('4. Clean image and count seeds')
-        # Clean up the binary image using morphological operations
-        cleaned_image = binary_closing(mask, structure=np.ones((3,3)))
-        cleaned_image = binary_opening(cleaned_image, structure=np.ones((3,3)))
-        # Identify seed boundaries
-        contours = find_contours(cleaned_image, .5)
         # Plot seed contours
         fig, ax = plt.subplots()
         ax.imshow(cleaned_image, cmap='gray')
@@ -121,6 +102,7 @@ if uploaded_file is not None:
         
         # Print number of seeds in image
         st.write('Image contains',len(contours),'seeds')
+
         
         ###################### Kmens ######################
 
