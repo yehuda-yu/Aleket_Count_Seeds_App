@@ -89,8 +89,12 @@ if uploaded_file is not None:
             
         # Calculate the Otsu threshold and create masked image
         st.write('3. Mask with threshold')
+        
+        # Otsu thresh for recommandation:
+        otsu_thresh = threshold_otsu(L_channel)
+        st.write(f'Otsu threshold is {otsu_thresh}')
+        # Set threshold by user choise and apply mask
         threshold = st.slider('Threshold Value', min_value=0, max_value=255)
-        #threshold = threshold_otsu(L_channel)
         # Create a mask using the Otsu threshold
         mask = np.where(L_channel < threshold, 0, 255)
         #st.image(mask,clamp=True,caption='Masked image',)
