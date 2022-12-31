@@ -20,6 +20,7 @@ import matplotlib.pyplot as plt
 import stardist
 from stardist.models import StarDist2D 
 from csbdeep.utils import normalize
+import time
 
 ###################### Functions ######################
 @st.cache
