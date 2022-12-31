@@ -91,7 +91,7 @@ if uploaded_file is not None:
         
         # Otsu thresh for recommendation:
         otsu_thresh = threshold_otsu(L_channel)
-        st.write(f'Otsu threshold is {otsu_thresh}')
+        st.info(f'Otsu threshold is {otsu_thresh}')
         
         # Set threshold by user choice and apply mask
         threshold = st.slider('Threshold Value', min_value=0, max_value=255)
