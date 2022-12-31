@@ -5,4 +5,5 @@ numpy
 scikit-image
 scipy
 matplotlib
+tensorflow
 stardist
