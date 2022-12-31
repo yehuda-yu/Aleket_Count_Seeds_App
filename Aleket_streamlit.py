@@ -49,13 +49,17 @@ def segment_image_kmeans(img, k=3, attempts=10):
     return segmented_image
 
 
-def process_image(image, threshold):
+def process_image(image):
     # Convert to PIE-LaB format:
     image_lab = color.rgb2lab(image)
 
     # Median filter on L channel to clean Noise
     L_channel = image_lab[:,:,2]
     L_channel = scipy.ndimage.median_filter(L_channel, footprint=np.ones((2,2)))
+    
+    return image_lab, L_channel
+
+def mask_and_clean(L_channel,threshold):
 
     # Create a mask using the Otsu threshold
     mask = np.where(L_channel < threshold, 0, 255)
@@ -67,7 +71,7 @@ def process_image(image, threshold):
     # Identify seed boundaries
     contours = find_contours(cleaned_image, .5)
 
-    return image_lab, L_channel, mask, cleaned_image, contours
+    return mask, cleaned_image, contours
 
 # Allow the user to select a TIF image file
 uploaded_file = st.file_uploader("Choose image file")
@@ -82,13 +86,15 @@ if uploaded_file is not None:
         # Calculate the Otsu threshold and create masked image
         st.write('3. Mask with threshold')
 
+        image_lab, L_channel = process_image(image, threshold)
+        
         # Otsu thresh for recommendation:
-        #otsu_thresh = threshold_otsu(L_channel)
-        #st.write(f'Otsu threshold is {otsu_thresh}')
+        otsu_thresh = threshold_otsu(L_channel)
+        st.write(f'Otsu threshold is {otsu_thresh}')
+        
         # Set threshold by user choice and apply mask
         threshold = st.slider('Threshold Value', min_value=0, max_value=255)
-
-        image_lab, L_channel, mask, cleaned_image, contours = process_image(image, threshold)
+        mask, cleaned_image, contours = mask_and_clean(L_channel,threshold)
 
         st.write('4. Clean image and count seeds')
         # Plot seed contours
