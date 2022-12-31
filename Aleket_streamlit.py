@@ -116,17 +116,17 @@ if uploaded_file is not None:
         image_lab, L_channel = process_image(image)
         
         # Calculate the Otsu threshold and create masked image
-        st.write('3. Mask with threshold')
+        st.subheader(Mask with threshold')
         
         # Otsu thresh for recommendation:
         otsu_thresh = threshold_otsu(L_channel)
         st.info(f'Otsu threshold is {round(otsu_thresh,2)}')
         
         # Set threshold by user choice and apply mask
-        threshold = st.slider('Threshold Value', min_value=0, max_value=255)
+        threshold = st.slider('Set threshold Value', min_value=0, max_value=255)
         mask, cleaned_image, contours = mask_and_clean(L_channel,threshold)
 
-        st.write('4. Clean image and count seeds')
+        st.subheader('Clean image and count seeds')
         # Plot seed contours
         fig, ax = plt.subplots()
         ax.imshow(L_channel*cleaned_image, cmap='gray')
@@ -140,7 +140,7 @@ if uploaded_file is not None:
         st.write('Image contains',len(contours),'seeds')
 
         # StarDist:
-        st.write('StarDist prediction')
+        st.subheader('StarDist prediction')
         StarDist_prediction(L_channel*cleaned_image)
         
         
