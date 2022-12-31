@@ -74,8 +74,9 @@ def mask_and_clean(L_channel,threshold):
 
     # Identify seed boundaries
     contours = find_contours(cleaned_image, .5)
-
+    
     return mask, cleaned_image, contours
+
 
 # StarDist function
 def StarDist_prediction(image):
@@ -94,21 +95,13 @@ def StarDist_prediction(image):
         fig, ax = plt.subplots(figsize=(10, 10))
         ax.imshow(image, cmap="gray")
         ax.imshow(instances, alpha=0.4)
-        
         time.sleep(2)
-        
+        st.pyplot(fig)
         return fig
       
 
     
 
-
-    # Plot the instances on top of the original image
-    fig, ax = plt.subplots(figsize=(10, 10))
-    ax.imshow(image, cmap="gray")
-    ax.imshow(instances, alpha=0.4)
-
-    return fig
 # Allow the user to select a TIF image file
 uploaded_file = st.file_uploader("Choose image file")
 
