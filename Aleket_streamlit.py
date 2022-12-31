@@ -61,7 +61,7 @@ def process_image(image):
 
 def mask_and_clean(L_channel,threshold):
 
-    # Create a mask using the Otsu threshold
+    # Create a mask using the threshold
     mask = np.where(L_channel < threshold, 0, 255)
 
     # Clean up the binary image using morphological operations
@@ -83,10 +83,11 @@ if uploaded_file is not None:
     st.image(image,use_column_width=True)
     # Expanded bottom fore analysis:
     with st.expander("Filters"):
+               
+        image_lab, L_channel = process_image(image)
+        
         # Calculate the Otsu threshold and create masked image
         st.write('3. Mask with threshold')
-
-        image_lab, L_channel = process_image(image, threshold)
         
         # Otsu thresh for recommendation:
         otsu_thresh = threshold_otsu(L_channel)
