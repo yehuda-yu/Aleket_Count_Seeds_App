@@ -17,6 +17,9 @@ from skimage.filters import threshold_otsu
 from scipy.ndimage import binary_closing, binary_opening
 import scipy
 import matplotlib.pyplot as plt
+import stardist
+from stardist.models import StarDist2D 
+from csbdeep.utils import normalize
 
 ###################### Functions ######################
 @st.cache
@@ -73,6 +76,38 @@ def mask_and_clean(L_channel,threshold):
 
     return mask, cleaned_image, contours
 
+# StarDist function
+def StarDist_prediction(image):
+
+    # Define a pretrained model to segment nuclei in fluorescence images (download from pretrained)
+    # Display a spinner while the model is making predictions
+    with st.spinner('Making predictions on image...'):
+        # Define the model from stardist
+        model = StarDist2D.from_pretrained("Versatile (fluorescent nuclei)")
+        axis_norm = (0,1)
+        
+        # Use the model to predict object instances in the image
+        instances, labels = model.predict_instances(normalize(image.astype(int), 1,99.8, axis=axis_norm))
+        
+        # Plot the instances on top of the original image
+        fig, ax = plt.subplots(figsize=(10, 10))
+        ax.imshow(image, cmap="gray")
+        ax.imshow(instances, alpha=0.4)
+        
+        time.sleep(2)
+        
+        return fig
+      
+
+    
+
+
+    # Plot the instances on top of the original image
+    fig, ax = plt.subplots(figsize=(10, 10))
+    ax.imshow(image, cmap="gray")
+    ax.imshow(instances, alpha=0.4)
+
+    return fig
 # Allow the user to select a TIF image file
 uploaded_file = st.file_uploader("Choose image file")
 
@@ -110,6 +145,10 @@ if uploaded_file is not None:
         # Print number of seeds in image
         st.write('Image contains',len(contours),'seeds')
 
+        # StarDist:
+        st.write('StarDist prediction')
+        StarDist_prediction(L_channel*cleaned_image)
+        
         
         ###################### Kmens ######################
 
