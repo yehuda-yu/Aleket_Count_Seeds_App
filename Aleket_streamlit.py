@@ -84,6 +84,7 @@ def StarDist_prediction(image):
     # Define a pretrained model to segment nuclei in fluorescence images (download from pretrained)
     # Display a spinner while the model is making predictions
     with st.spinner('Making predictions on image...'):
+        
         # Define the model from stardist
         model = StarDist2D.from_pretrained("Versatile (fluorescent nuclei)")
         axis_norm = (0,1)
@@ -116,7 +117,7 @@ if uploaded_file is not None:
         image_lab, L_channel = process_image(image)
         
         # Calculate the Otsu threshold and create masked image
-        st.subheader(Mask with threshold')
+        st.subheader('Mask with threshold')
         
         # Otsu thresh for recommendation:
         otsu_thresh = threshold_otsu(L_channel)
