@@ -100,7 +100,7 @@ if uploaded_file is not None:
         st.write('4. Clean image and count seeds')
         # Plot seed contours
         fig, ax = plt.subplots()
-        ax.imshow(cleaned_image, cmap='gray')
+        ax.imshow(L_channel*cleaned_image, cmap='gray')
         ax.set_title('Clean Image')
         for contour in contours:
            ax.plot(contour[:, 1], contour[:, 0], '-r', linewidth=1.5)
