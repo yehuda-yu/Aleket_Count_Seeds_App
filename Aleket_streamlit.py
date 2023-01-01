@@ -146,7 +146,7 @@ if uploaded_file is not None:
         
         
         ###################### Kmens ######################
-'''
+
     # slider for choosing K:
     k_value = st.slider('Insert K value (number of clusters):', 2,10,3) # asks for input from the user
     attempts_value_slider = st.slider('Number of attempts', value = 7, min_value = 1, max_value = 10) # slider example
@@ -155,4 +155,4 @@ if uploaded_file is not None:
     # Display the result
     st.subheader('Output Image')
     st.image(segmented_image, use_column_width=True)
-'''
+
