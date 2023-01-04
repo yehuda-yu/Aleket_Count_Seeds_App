@@ -121,7 +121,7 @@ if uploaded_file is not None:
         
         # show bar plot distribution of pixels
         fig, ax = plt.subplots(figsize=(10, 5))
-        ax.hist(np.squeeze(gray_image))
+        ax.hist(np.squeeze(L_channel))
         st.pyplot(fig)
         
         # Otsu thresh for recommendation:
