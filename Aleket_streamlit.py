@@ -119,6 +119,11 @@ if uploaded_file is not None:
         # Calculate the Otsu threshold and create masked image
         st.subheader('Mask with threshold')
         
+        # show bar plot distribution of pixels
+        fig, ax = plt.subplots(figsize=(10, 5))
+        ax.hist(np.squeeze(gray_image))
+        st.pyplot(fig)
+        
         # Otsu thresh for recommendation:
         otsu_thresh = threshold_otsu(L_channel)
         st.info(f'Otsu threshold is {round(otsu_thresh,2)}')
