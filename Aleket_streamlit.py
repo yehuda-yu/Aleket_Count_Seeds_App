@@ -58,7 +58,7 @@ def process_image(image):
     image_lab = color.rgb2lab(image)
 
     # Median filter on L channel to clean Noise
-    L_channel = image_lab[:,:,0]
+    L_channel = image_lab[:,:,2]
     L_channel = scipy.ndimage.median_filter(L_channel, footprint=np.ones((2,2)))
     
     return image_lab, L_channel
@@ -120,9 +120,9 @@ if uploaded_file is not None:
         st.subheader('Mask with threshold')
         
         # show bar plot distribution of pixels
-        fig, ax = plt.subplots(figsize=(10, 2))
-        ax.hist(np.squeeze(L_channel))
-        st.pyplot(fig)
+        #fig, ax = plt.subplots(figsize=(10, 2))
+        #ax.hist(np.squeeze(L_channel))
+        #st.pyplot(fig)
         
         # Otsu thresh for recommendation:
         otsu_thresh = threshold_otsu(L_channel)
