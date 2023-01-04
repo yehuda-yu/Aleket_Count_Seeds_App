@@ -120,7 +120,7 @@ if uploaded_file is not None:
         st.subheader('Mask with threshold')
         
         # show bar plot distribution of pixels
-        fig, ax = plt.subplots(figsize=(10, 5))
+        fig, ax = plt.subplots(figsize=(10, 2))
         ax.hist(np.squeeze(L_channel))
         st.pyplot(fig)
         
