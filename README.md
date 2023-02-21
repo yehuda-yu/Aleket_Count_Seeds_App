@@ -13,5 +13,5 @@ The app will also display the number of seeds that have germinated.
 
 ## Acknowledgements
 
-This app was created by [Yehuda Yungstein] and is based on the research by Chen Dayan, [Prof. Yael Mishael group](https://yaelmishael.wixsite.com/soil-and-water).
+This app was created by Yehuda Yungstein and Chen Dayan and is based on the research by Chen Dayan, [Prof. Yael Mishael group](https://yaelmishael.wixsite.com/soil-and-water).
 
